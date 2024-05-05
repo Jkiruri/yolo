@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+  client:
+    image: jkiruri/client-image:v1.0.0
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+
+    networks:
+      - ecommerce-network
+    depends_on:
+      - backend
+
+  backend:
+    image: jkiruri/backend-image:v1.0.0
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+
+    environment:
+      - mongodb_url=mongodb://127.0.0.1:27017
+
+    networks:
+      - ecommerce-network
+    depends_on:
+      - db
+
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - ecommerce-network
+
+
+volumes:
+    data:
+
+networks:
+    ecommerce-network:
+       driver: bridge
+
