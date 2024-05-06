@@ -1,31 +1,27 @@
-FROM node:13.12.0-alpine AS builder
+# STAGE 1
+# From base image node
+FROM node:alpine as build
+# Changing working directory
+WORKDIR /code
 
-# Set the working directory inside the container to /app
-WORKDIR /app
+# Copy package.json and package-lock.json files
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
-# Copy the package.json and package-lock.json files to the working directory in the container
-COPY package.json ./
-
-# Install the dependencies specified in the package.json file
 RUN npm install --production
-
-# Copy all the files to the working directory in the container
+# COPY all the files from Current Directory into the Container
 COPY . .
 
-# Build your application 
+# Install the Project Dependencies like Express Framework
 RUN npm run build
 
-# Start a new stage
-FROM node:13.12.0-alpine
+# STAGE 2
+FROM nginx:1.22-alpine as prod
 
-# Set the working directory inside the container to /app
-WORKDIR /app
+COPY --from=build /code/build /usr/share/nginx/html
 
-# Copy only the necessary files from the builder stage
-COPY --from=builder /app ./
-
-# Expose port 3000 to allow incoming connections to the container
+# Tell that this image is going to Open a Port 
 EXPOSE 3000
 
-#  command to run when the container starts
-CMD ["npm", "start"]
+# Default Command to launch the Application
+CMD ["nginx", "-g", "daemon off;"]
