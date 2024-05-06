@@ -16,10 +16,5 @@ COPY . .
 # Expose the port that the backend server will run on
 EXPOSE 5000
 
-# Set the environment variable for MongoDB URI
-#ENV MONGODB_URI="mongodb+srv://admin:hhrCwLtawnpeGtPn@cluster0.eaqif8y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 CMD ["npm", "start"]
-
-# Define the command to run the backend server
-# CMD ["node", "server.js"]
 
