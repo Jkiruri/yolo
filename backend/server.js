@@ -6,14 +6,14 @@ const upload = multer();
 
 const productRoute = require('./routes/api/productRoute');
 
-// Connecting to the Database
-let mongodb_url = 'mongodb://db:27017/';
+/**  Connecting to mongodb container database*/
+let mongodb_url = 'mongodb://mongodb:27017/';
 let dbName = 'yolomy';
 
-// define a url to connect to the database
-const MONGODB_URI = process.env.MONGODB_URI || mongodb_url + dbName
-mongoose.connect(MONGODB_URI,{useNewUrlParser: true, useUnifiedTopology: true  } )
 let db = mongoose.connection;
+mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
+    if (err) console.log(err)
+});
 
 // Check Connection
 db.once('open', ()=>{
@@ -26,10 +26,10 @@ db.on('error', (error)=>{
 })
 
 // Initializing express
-const app = express()
+const app = express();
 
 // Body parser middleware
-app.use(express.json())
+app.use(express.json());
 
 // 
 app.use(upload.array()); 
@@ -38,11 +38,15 @@ app.use(upload.array());
 app.use(cors());
 
 // Use Route
-app.use('/api/products', productRoute)
+app.use('/api/products', productRoute);
+app.get('/', (req, res) => {
+    res.send('<h3>Backend server</h3>');
+});
+
 
 // Define the PORT
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
-})
+});
