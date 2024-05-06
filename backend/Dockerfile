@@ -1,20 +1,17 @@
-# Use a base image with Node.js installed
-FROM node:13.12.0-alpine
+# Use the official Node.js image as the base image
+FROM node:alpine3.18 
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json (if available) to the working directory
+# Set the working directory in the container
+WORKDIR /
+# Copy package.json and package-lock.json files
 COPY package*.json ./
-
 # Install dependencies
+# RUN npm install --immutable
 RUN npm install
-
-# Copy the rest of the backend code into the container
+# Copy the rest of the application code
 COPY . .
-
-# Expose the port that the backend server will run on
+# Access port
 EXPOSE 5000
 
+# Command to run the Node.js application
 CMD ["npm", "start"]
-
