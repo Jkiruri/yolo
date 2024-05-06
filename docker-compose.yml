@@ -8,7 +8,7 @@ services:
     volumes:
       - yolo:/data/db
     networks:
-      - yolo-network
+      - ecommerce-network
 
   backend:
     build: ./backend   
@@ -21,7 +21,7 @@ services:
     depends_on:
       - database
     networks:
-      - yolo-network
+      - ecommerce-network
 
   frontend:
     build: ./client   
@@ -30,11 +30,11 @@ services:
     ports:
       - "3000:80"
     networks:
-      - yolo-network
+      - ecommerce-network
 
 networks:
-  yolo-network:
-    name: yolo-network
+  ecommerce-network:
+    name: ecommerce-network
     driver: bridge
 
 volumes:
