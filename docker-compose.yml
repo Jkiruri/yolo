@@ -1,48 +1,43 @@
-version: '3.7'
+#version: '3.9'
 services:
-  client:
-    image: jkiruri/client-image:v1.0.0
-    stdin_open: true
-    tty: true
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./client:/app
-
-    networks:
-      - ecommerce-network
-    depends_on:
-      - backend
-
-  backend:
-    image: jkiruri/backend-image:v1.0.0
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./backend:/app
-
-    environment:
-      - mongodb_url=mongodb://127.0.0.1:27017
-
-    networks:
-      - ecommerce-network
-    depends_on:
-      - db
-
-  db:
+  database:
     image: mongo
+    container_name: mongodb
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/data/db
+      - yolo:/data/db
     networks:
-      - ecommerce-network
+      - yolo-network
 
+  backend:
+    build: ./backend
+    container_name: backend
+    image: jkiruri/backend-image:v1.0.0
+    ports:
+      - "5000:5000"
+    environment:
+      # DB_URL: mongodb://database/
+      DB_URL: mongodb://mongodb:27017/
+    depends_on:
+      - database
+    networks:
+      - yolo-network
 
-volumes:
-    data:
+  frontend:
+    build: ./client
+    container_name: frontend
+    image: jkiruri/client-image:v1.0.0
+    ports:
+      - "3000:80"
+    networks:
+      - yolo-network
 
 networks:
-    ecommerce-network:
-       driver: bridge
+  yolo-network:
+    name: yolo-network
+    driver: bridge
 
+volumes:
+  yolo:
+   name: yolo
