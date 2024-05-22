@@ -1,44 +1,21 @@
 ---
-- name: Install necessary dependencies
-  apt:
-    name: 
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-    state: present
-    update_cache: yes
-
-- name: Add Docker GPG key
+# tasks file for install-docker
+- name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
-- name: Add Docker repository
+- name: Add Docker Repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    repo: deb https://download.docker.com/linux/ubuntu jammy stable
     state: present
-    update_cache: yes
 
-- name: Install Docker
+- name: Update apt and install docker-ce
   apt:
     name: docker-ce
-    state: present
+    state: latest
+    update_cache: true
 
-- name: Ensure Docker service is running
-  service:
+- name: Install Docker Module for Python
+  pip:
     name: docker
-    state: started
-    enabled: yes
-
-- name: Download Docker Compose
-  get_url:
-    url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
-    dest: /usr/local/bin/docker-compose
-    mode: '0755'
-
-- name: Verify Docker Compose installation
-  command: docker-compose --version
-  register: result
-  changed_when: false
-  failed_when: result.rc != 0
