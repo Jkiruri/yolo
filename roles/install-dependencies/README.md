@@ -1,38 +1,24 @@
-Role Name
-=========
+# install-dependencies
 
-A brief description of the role goes here.
+## Description
 
-Requirements
-------------
+This role installs all the necessary dependencies required for the application to run. These dependencies may include various tools and libraries needed for both the backend and frontend components.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Tasks
 
-Role Variables
---------------
+- Updates the package list to ensure the latest versions of packages are available.
+- Installs common build tools and libraries.
+- Installs other required dependencies specific to the application.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Variables
 
-Dependencies
-------------
+You can define specific dependencies to be installed by this role by setting the `dependencies` variable in your playbook. For example:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+```yaml
+dependencies:
+  - build-essential
+  - curl
+  - git
+  - libssl-dev
+  - python3
+  - python3-pip
