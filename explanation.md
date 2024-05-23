@@ -35,3 +35,34 @@ All images built during the project were pushed to DockerHub for deployment, kin
 ![alt text](image.png)
 
 ![alt text](image-2.png)
+
+Ansible Playbook Explanation
+Roles
+test-connection
+
+Tests the connection to the VM to ensure it's active.
+Uses Ansible's ping module.
+update-server
+
+Updates the server to ensure all packages are up-to-date.
+Uses apt-get update and apt-get upgrade.
+install-dependencies
+
+Installs necessary dependencies for the application.
+Includes packages like build-essential, curl, etc.
+install-docker
+
+Installs Docker to manage and deploy containers.
+Uses Docker's official installation script.
+install-git
+
+Ensures Git is installed for cloning repositories.
+Uses apt-get install git.
+clone-repo
+
+Clones the project repository into the VM.
+Uses Ansible's git module.
+deploy-containers
+
+Deploys the Docker containers using docker-compose.
+Copies docker-compose.yml to the server and runs docker-compose up. 

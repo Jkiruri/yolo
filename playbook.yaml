@@ -5,7 +5,7 @@
     WORK_AREA: DevOps05
     PROJECT_NAME: yolo
   roles:
-    - test-connect
+    - test-connection
     - update-server
     - install-dependencies
     - install-docker
