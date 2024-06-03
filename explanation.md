@@ -37,11 +37,12 @@ All images built during the project were pushed to DockerHub for deployment, kin
 ![alt text](image-2.png)
 
 Ansible Playbook Explanation
+
 Roles
 test-connection
 
 Tests the connection to the VM to ensure it's active.
-Uses Ansible's ping module.
+Uses Ansible's ping module to make sure it is active.
 update-server
 
 Updates the server to ensure all packages are up-to-date.
