@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yolo
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+
+  storageClassName: custom-standard
+  gcePersistentDisk:
+    pdName: mongo-disk
+    fsType: ext4
+  persistentVolumeReclaimPolicy: Retain
