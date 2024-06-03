@@ -67,3 +67,6 @@ deploy-containers
 
 Deploys the Docker containers using docker-compose.
 Copies docker-compose.yml to the server and runs docker-compose up. 
+
+The application should run successfully like:
+![alt text](<I2.jpg>)
