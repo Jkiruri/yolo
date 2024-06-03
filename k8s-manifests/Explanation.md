@@ -21,3 +21,4 @@ With the environment set and requirements met, below commands helps achieve the 
 - `kubectl apply -f client-deployment.yaml`
 - `kubectl apply -f client-service.yaml`
 
+![alt text](<image.jpg>)
